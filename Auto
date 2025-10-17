@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>🚗 Автосалон</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    section {
+      margin-bottom: 30px;
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px;
+    }
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚘 Автосалон</h1>
+  <div class="container">
+
+    <!-- Добавление авто -->
+    <section>
+      <h2>Добавить автомобиль</h2>
+      <input id="brand" placeholder="Марка">
+      <input id="model" placeholder="Модель">
+      <input id="year" type="number" placeholder="Год">
+      <input id="price" type="number" placeholder="Цена">
+      <button onclick="addCar()">Добавить авто</button>
+    </section>
+
+    <!-- Добавление клиента -->
+    <section>
+      <h2>Добавить клиента</h2>
+      <input id="clientName" placeholder="Имя клиента">
+      <input id="clientPhone" placeholder="Телефон">
+      <button onclick="addClient()">Добавить клиента</button>
+    </section>
+
+    <!-- Создание заказа -->
+    <section>
+      <h2>Создать заказ</h2>
+      <input id="clientId" type="number" placeholder="ID клиента">
+      <input id="carId" type="number" placeholder="ID авто">
+      <button onclick="createOrder()">Создать заказ</button>
+    </section>
+
+    <!-- Отчёт -->
+    <section>
+      <h2>Отчёт о продажах</h2>
+      <button onclick="generateReport()">Скачать отчёт (JSON)</button>
+      <div id="reportArea"></div>
+    </section>
+
+    <!-- Таблицы -->
+    <section>
+      <h2>🚗 Автомобили</h2>
+      <table id="carsTable">
+        <tr><th>ID</th><th>Марка</th><th>Модель</th><th>Год</th><th>Цена</th><th>Статус</th></tr>
+      </table>
+      <h2>👤 Клиенты</h2>
+      <table id="clientsTable">
+        <tr><th>ID</th><th>Имя</th><th>Телефон</th></tr>
+      </table>
+      <h2>💰 Заказы</h2>
+      <table id="ordersTable">
+        <tr><th>ID</th><th>Клиент</th><th>Авто</th><th>Дата</th><th>Сумма</th></tr>
+      </table>
+    </section>
+  </div>
+
+  <script>
+    let cars = JSON.parse(localStorage.getItem("cars")) || [];
+    let clients = JSON.parse(localStorage.getItem("clients")) || [];
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    function saveData() {
+      localStorage.setItem("cars", JSON.stringify(cars));
+      localStorage.setItem("clients", JSON.stringify(clients));
+      localStorage.setItem("orders", JSON.stringify(orders));
+    }
+
+    function updateTables() {
+      // Обновляем таблицу машин
+      const carsTable = document.getElementById("carsTable");
+      carsTable.innerHTML = "<tr><th>ID</th><th>Марка</th><th>Модель</th><th>Год</th><th>Цена</th><th>Статус</th></tr>";
+      cars.forEach((car, i) => {
+        carsTable.innerHTML += `<tr><td>${i+1}</td><td>${car.brand}</td><td>${car.model}</td><td>${car.year}</td><td>${car.price}</td><td>${car.available ? "В наличии" : "Продан"}</td></tr>`;
+      });
+
+      // Таблица клиентов
+      const clientsTable = document.getElementById("clientsTable");
+      clientsTable.innerHTML = "<tr><th>ID</th><th>Имя</th><th>Телефон</th></tr>";
+      clients.forEach((c, i) => {
+        clientsTable.innerHTML += `<tr><td>${i+1}</td><td>${c.name}</td><td>${c.phone}</td></tr>`;
+      });
+
+      // Таблица заказов
+      const ordersTable = document.getElementById("ordersTable");
+      ordersTable.innerHTML = "<tr><th>ID</th><th>Клиент</th><th>Авто</th><th>Дата</th><th>Сумма</th></tr>";
+      orders.forEach((o, i) => {
+        ordersTable.innerHTML += `<tr><td>${i+1}</td><td>${o.client}</td><td>${o.car}</td><td>${o.date}</td><td>${o.total}</td></tr>`;
+      });
+    }
+
+    function addCar() {
+      const brand = document.getElementById("brand").value;
+      const model = document.getElementById("model").value;
+      const year = document.getElementById("year").value;
+      const price = document.getElementById("price").value;
+      if (!brand || !model || !year || !price) return alert("Введите все данные!");
+      cars.push({ brand, model, year, price, available: true });
+      saveData();
+      updateTables();
+      alert("Автомобиль добавлен!");
+    }
+
+    function addClient() {
+      const name = document.getElementById("clientName").value;
+      const phone = document.getElementById("clientPhone").value;
+      if (!name || !phone) return alert("Введите все данные клиента!");
+      clients.push({ name, phone });
+      saveData();
+      updateTables();
+      alert("Клиент добавлен!");
+    }
+
+    function createOrder() {
+      const clientId = document.getElementById("clientId").value - 1;
+      const carId = document.getElementById("carId").value - 1;
+      if (!clients[clientId] || !cars[carId]) return alert("Неверный ID клиента или авто!");
+      if (!cars[carId].available) return alert("Это авто уже продано!");
+      const date = new Date().toLocaleDateString();
+      const total = cars[carId].price;
+      orders.push({
+        client: clients[clientId].name,
+        car: cars[carId].brand + " " + cars[carId].model,
+        date,
+        total
+      });
+      cars[carId].available = false;
+      saveData();
+      updateTables();
+      alert("Заказ успешно создан!");
+    }
+
+    function generateReport() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(orders, null, 2));
+      const a = document.createElement("a");
+      a.href = dataStr;
+      a.download = "sales_report.json";
+      a.click();
+    }
+
+    // при загрузке
+    updateTables();
+  </script>
+</body>
+</html>
