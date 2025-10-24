@@ -1,114 +1,133 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>🚗 Автосалон</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       margin: 0;
       padding: 20px;
+      color: #fff;
     }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
+    h1 { text-align: center; color: #fff; }
     .container {
       max-width: 800px;
       margin: 0 auto;
       background: white;
+      color: black;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    section {
-      margin-bottom: 30px;
-    }
-    input, button {
-      padding: 8px;
-      margin: 5px;
-    }
-    button {
-      background: #3498db;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    button:hover {
-      background: #2980b9;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    table, th, td {
-      border: 1px solid #ccc;
-    }
-    th, td {
-      padding: 8px;
-      text-align: left;
-    }
-    .success {
-      color: green;
-    }
-    .error {
-      color: red;
-    }
+    section { margin-bottom: 30px; }
+    input, button, select { padding: 8px; margin: 5px; font-size: 14px; }
+    button { cursor: pointer; border-radius: 5px; border: none; color: white; }
+    button.add-btn { background: #3498db; }
+    button.add-btn:hover { background: #2980b9; }
+    button.delete-btn { background: #e74c3c; font-size: 12px; padding: 4px 8px; margin-left: 5px; }
+    button.delete-btn:hover { background: #c0392b; }
+    button.edit-btn { background: #f39c12; font-size: 12px; padding: 4px 8px; margin-left: 5px; }
+    button.edit-btn:hover { background: #d35400; }
+    button.call-btn { background: #2ecc71; font-size: 12px; padding: 4px 8px; margin-left: 5px; }
+    button.call-btn:hover { background: #27ae60; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; color: black; }
+    table, th, td { border: 1px solid #ccc; }
+    th, td { padding: 8px; text-align: left; }
+    td select { width: 100px; }
+    .success { color: green; }
+    .error { color: red; }
   </style>
 </head>
 <body>
   <h1>🚘 Автосалон</h1>
   <div class="container">
 
-    <!-- Добавление авто -->
+
     <section>
       <h2>Добавить автомобиль</h2>
-      <input id="brand" placeholder="Марка">
-      <input id="model" placeholder="Модель">
-      <input id="year" type="number" placeholder="Год">
-      <input id="price" type="number" placeholder="Цена">
-      <button onclick="addCar()">Добавить авто</button>
+      <input id="brand" placeholder="Марка" />
+      <input id="model" placeholder="Модель" />
+      <input id="year" type="number" placeholder="Год" />
+      <input id="mileage" type="number" placeholder="Пробег" />
+      <select id="gearbox">
+        <option value="">Коробка</option>
+        <option value="Автомат">Автомат</option>
+        <option value="Механика">Механика</option>
+        <option value="Робот">Робот</option>
+        <option value="Вариатор">Вариатор</option>
+      </select>
+      <select id="trim">
+        <option value="">Комплектация</option>
+        <option value="Средняя">Средняя</option>
+        <option value="Полная">Полная</option>
+      </select>
+      <input id="engineVolume" type="number" placeholder="Объём двигателя (л)" step="0.1" />
+      <input id="fuelConsumption" type="number" placeholder="Расход топлива (л/100км)" step="0.1" />
+      <select id="fuelType">
+        <option value="">Тип топлива</option>
+        <option value="Бензин">Бензин</option>
+        <option value="Гибрид">Гибрид</option>
+        <option value="Газ">Газ</option>
+      </select>
+      <input id="color" placeholder="Цвет" />
+      <input id="price" type="number" placeholder="Цена" />
+      <button class="add-btn" onclick="addCar()">Добавить авто</button>
     </section>
 
-    <!-- Добавление клиента -->
+
     <section>
       <h2>Добавить клиента</h2>
-      <input id="clientName" placeholder="Имя клиента">
-      <input id="clientPhone" placeholder="Телефон">
-      <button onclick="addClient()">Добавить клиента</button>
+      <input id="clientName" placeholder="Имя клиента" />
+      <input id="clientPhone" placeholder="Телефон" />
+      <button class="add-btn" onclick="addClient()">Добавить клиента</button>
     </section>
 
-    <!-- Создание заказа -->
+
     <section>
       <h2>Создать заказ</h2>
-      <input id="clientId" type="number" placeholder="ID клиента">
-      <input id="carId" type="number" placeholder="ID авто">
-      <button onclick="createOrder()">Создать заказ</button>
+      <input id="clientId" type="number" placeholder="ID клиента" />
+      <input id="carId" type="number" placeholder="ID авто" />
+      <button class="add-btn" onclick="createOrder()">Создать заказ</button>
     </section>
 
-    <!-- Отчёт -->
+
     <section>
       <h2>Отчёт о продажах</h2>
-      <button onclick="generateReport()">Скачать отчёт (JSON)</button>
+      <button class="add-btn" onclick="generateReport()">Скачать отчёт (JSON)</button>
       <div id="reportArea"></div>
     </section>
 
-    <!-- Таблицы -->
+  
     <section>
-      <h2>🚗 Автомобили</h2>
+      <h2> Автомобили</h2>
       <table id="carsTable">
-        <tr><th>ID</th><th>Марка</th><th>Модель</th><th>Год</th><th>Цена</th><th>Статус</th></tr>
+        <tr>
+          <th>ID</th>
+          <th>Марка и модель</th>
+          <th>Год</th>
+          <th>Пробег</th>
+          <th>Коробка</th>
+          <th>Комплектация</th>
+          <th>Объём</th>
+          <th>Расход</th>
+          <th>Топливо</th>
+          <th>Цвет</th>
+          <th>Цена</th>
+          <th>Статус</th>
+          <th>Действия</th>
+        </tr>
       </table>
-      <h2>👤 Клиенты</h2>
+
+      <h2> Клиенты</h2>
       <table id="clientsTable">
-        <tr><th>ID</th><th>Имя</th><th>Телефон</th></tr>
+        <tr><th>ID</th><th>Имя</th><th>Телефон</th><th>Действия</th></tr>
       </table>
-      <h2>💰 Заказы</h2>
+
+      <h2> Заказы</h2>
       <table id="ordersTable">
-        <tr><th>ID</th><th>Клиент</th><th>Авто</th><th>Дата</th><th>Сумма</th></tr>
+        <tr><th>ID</th><th>Клиент</th><th>Авто</th><th>Дата</th><th>Сумма</th><th>Действия</th></tr>
       </table>
     </section>
   </div>
@@ -125,79 +144,276 @@
     }
 
     function updateTables() {
-      // Обновляем таблицу машин
       const carsTable = document.getElementById("carsTable");
-      carsTable.innerHTML = "<tr><th>ID</th><th>Марка</th><th>Модель</th><th>Год</th><th>Цена</th><th>Статус</th></tr>";
-      cars.forEach((car, i) => {
-        carsTable.innerHTML += `<tr><td>${i+1}</td><td>${car.brand}</td><td>${car.model}</td><td>${car.year}</td><td>${car.price}</td><td>${car.available ? "В наличии" : "Продан"}</td></tr>`;
+      carsTable.innerHTML = `
+        <tr>
+          <th>ID</th><th>Марка и модель</th><th>Год</th><th>Пробег</th>
+          <th>Коробка</th><th>Комплектация</th><th>Объём</th><th>Расход</th><th>Топливо</th>
+          <th>Цвет</th><th>Цена</th><th>Статус</th><th>Действия</th>
+        </tr>`;
+      cars.forEach((car,i)=>{
+        carsTable.innerHTML+=`
+        <tr>
+          <td>${i+1}</td>
+          <td style="cursor:pointer;color:#2980b9;text-decoration:underline;" onclick="showGallery('${car.brand} ${car.model}')">
+            ${car.brand} ${car.model}
+          </td>
+          <td>${car.year}</td>
+          <td>${car.mileage||'-'}</td>
+          <td>${car.gearbox||'-'}</td>
+          <td>${car.trim||'-'}</td>
+          <td>${car.engineVolume || '-'}</td>
+          <td>${car.fuelConsumption || '-'}</td>
+          <td>${car.fuelType || '-'}</td>
+          <td>${car.color||'-'}</td>
+          <td>${car.price} $ / ${car.price*84} сом</td>
+          <td>
+            <select onchange="changeCarStatus(${i}, this.value)">
+              <option value="true" ${car.available?"selected":""}>В наличии</option>
+              <option value="false" ${!car.available?"selected":""}>Продан</option>
+            </select>
+          </td>
+          <td>
+            <button class="delete-btn" onclick="deleteCar(${i})">Удалить</button>
+            <button class="edit-btn" onclick="editCar(${i})">Изменить</button>
+          </td>
+        </tr>`;
       });
 
-      // Таблица клиентов
       const clientsTable = document.getElementById("clientsTable");
-      clientsTable.innerHTML = "<tr><th>ID</th><th>Имя</th><th>Телефон</th></tr>";
-      clients.forEach((c, i) => {
-        clientsTable.innerHTML += `<tr><td>${i+1}</td><td>${c.name}</td><td>${c.phone}</td></tr>`;
+      clientsTable.innerHTML = <tr><th>ID</th><th>Имя</th><th>Телефон</th><th>Действия</th></tr>;
+      clients.forEach((c,i)=>{
+        clientsTable.innerHTML+=`
+        <tr>
+          <td>${i+1}</td>
+          <td>${c.name}</td>
+          <td>${c.phone}</td>
+          <td>
+            <button class="delete-btn" onclick="deleteClient(${i})">Удалить</button>
+            <button class="edit-btn" onclick="editClient(${i})">Изменить</button>
+            <button class="call-btn" onclick="callClient(${i})">Позвонить</button>
+          </td>
+        </tr>`;
       });
 
-      // Таблица заказов
       const ordersTable = document.getElementById("ordersTable");
-      ordersTable.innerHTML = "<tr><th>ID</th><th>Клиент</th><th>Авто</th><th>Дата</th><th>Сумма</th></tr>";
-      orders.forEach((o, i) => {
-        ordersTable.innerHTML += `<tr><td>${i+1}</td><td>${o.client}</td><td>${o.car}</td><td>${o.date}</td><td>${o.total}</td></tr>`;
+      ordersTable.innerHTML = <tr><th>ID</th><th>Клиент</th><th>Авто</th><th>Дата</th><th>Сумма</th><th>Действия</th></tr>;
+      orders.forEach((o,i)=>{
+        ordersTable.innerHTML+=`
+        <tr>
+          <td>${i+1}</td>
+          <td>${clients[o.clientId]?.name||'Не найден'}</td>
+          <td>${cars[o.carId]?.brand || ''} ${cars[o.carId]?.model || ''}</td>
+          <td>${new Date(o.date).toLocaleDateString()}</td>
+          <td>${o.sum} $ / ${o.sum*84} сом</td>
+          <td>
+            <button class="delete-btn" onclick="deleteOrder(${i})">Удалить</button>
+          </td>
+        </tr>`;
       });
     }
 
     function addCar() {
-      const brand = document.getElementById("brand").value;
-      const model = document.getElementById("model").value;
-      const year = document.getElementById("year").value;
-      const price = document.getElementById("price").value;
-      if (!brand || !model || !year || !price) return alert("Введите все данные!");
-      cars.push({ brand, model, year, price, available: true });
+      const brand = document.getElementById("brand").value.trim();
+      const model = document.getElementById("model").value.trim();
+      const year = +document.getElementById("year").value;
+      const mileage = +document.getElementById("mileage").value;
+      const gearbox = document.getElementById("gearbox").value;
+      const trim = document.getElementById("trim").value;
+      const engineVolume = parseFloat(document.getElementById("engineVolume").value);
+      const fuelConsumption = parseFloat(document.getElementById("fuelConsumption").value);
+      const fuelType = document.getElementById("fuelType").value;
+      const color = document.getElementById("color").value.trim();
+      const price = +document.getElementById("price").value;
+
+      if (!brand || !model || !year || !price) {
+        alert("Заполните обязательные поля: марка, модель, год, цена");
+        return;
+      }
+
+      cars.push({
+        brand, model, year, mileage, gearbox, trim,
+        engineVolume, fuelConsumption, fuelType, color, price, available:true
+      });
       saveData();
       updateTables();
-      alert("Автомобиль добавлен!");
+
+      document.querySelectorAll("#brand, #model, #year, #mileage, #gearbox, #trim, #engineVolume, #fuelConsumption, #fuelType, #color, #price").forEach(input => input.value = "");
     }
 
     function addClient() {
-      const name = document.getElementById("clientName").value;
-      const phone = document.getElementById("clientPhone").value;
-      if (!name || !phone) return alert("Введите все данные клиента!");
-      clients.push({ name, phone });
+      const name = document.getElementById("clientName").value.trim();
+      const phone = document.getElementById("clientPhone").value.trim();
+      if(!name || !phone) {
+        alert("Введите имя и телефон клиента");
+        return;
+      }
+      clients.push({name, phone});
       saveData();
       updateTables();
-      alert("Клиент добавлен!");
+      document.getElementById("clientName").value = "";
+      document.getElementById("clientPhone").value = "";
     }
 
     function createOrder() {
-      const clientId = document.getElementById("clientId").value - 1;
-      const carId = document.getElementById("carId").value - 1;
-      if (!clients[clientId] || !cars[carId]) return alert("Неверный ID клиента или авто!");
-      if (!cars[carId].available) return alert("Это авто уже продано!");
-      const date = new Date().toLocaleDateString();
-      const total = cars[carId].price;
-      orders.push({
-        client: clients[clientId].name,
-        car: cars[carId].brand + " " + cars[carId].model,
-        date,
-        total
-      });
+      const clientId = +document.getElementById("clientId").value - 1;
+      const carId = +document.getElementById("carId").value - 1;
+      if(clientId < 0 || clientId >= clients.length || carId < 0 || carId >= cars.length) {
+        alert("Некорректный ID клиента или авто");
+        return;
+      }
+      if(!cars[carId].available) {
+        alert("Автомобиль уже продан");
+        return;
+      }
+      const sum = cars[carId].price;
+      orders.push({clientId, carId, date: new Date().toISOString(), sum});
       cars[carId].available = false;
       saveData();
       updateTables();
-      alert("Заказ успешно создан!");
+      document.getElementById("clientId").value = "";
+      document.getElementById("carId").value = "";
+    }
+
+    function deleteCar(i) {
+      if(confirm("Удалить автомобиль?")) {
+        cars.splice(i,1);
+        saveData();
+        updateTables();
+      }
+    }
+
+    function deleteClient(i) {
+      if(confirm("Удалить клиента?")) {
+        clients.splice(i,1);
+        saveData();
+        updateTables();
+      }
+    }
+
+    function deleteOrder(i) {
+      if(confirm("Удалить заказ?")) {
+        orders.splice(i,1);
+        saveData();
+        updateTables();
+      }
+    }
+
+    function changeCarStatus(i, val) {
+      cars[i].available = (val === "true");
+      saveData();
+      updateTables();
+    }
+
+
+    function editCar(i) {
+      const car = cars[i];
+      const brand = prompt("Марка", car.brand);
+      if(brand === null) return;
+      const model = prompt("Модель", car.model);
+      if(model === null) return;
+      const year = prompt("Год", car.year);
+      if(year === null) return;
+      const mileage = prompt("Пробег", car.mileage);
+      if(mileage === null) return;
+      const gearbox = prompt("Коробка (Автомат, Механика, Робот, Вариатор)", car.gearbox);
+      if(gearbox === null) return;
+      const trim = prompt("Комплектация (Средняя, Полная)", car.trim);
+      if(trim === null) return;
+      const engineVolume = prompt("Объём двигателя (л)", car.engineVolume);
+      if(engineVolume === null) return;
+      const fuelConsumption = prompt("Расход топлива (л/100км)", car.fuelConsumption);
+      if(fuelConsumption === null) return;
+      const fuelType = prompt("Тип топлива (Бензин, Гибрид, Газ)", car.fuelType);
+      if(fuelType === null) return;
+      const color = prompt("Цвет", car.color);
+      if(color === null) return;
+      const price = prompt("Цена", car.price);
+      if(price === null) return;
+
+      cars[i] = {
+        brand, model, year: +year, mileage: +mileage, gearbox, trim,
+        engineVolume: parseFloat(engineVolume), fuelConsumption: parseFloat(fuelConsumption),
+        fuelType, color, price: +price, available: car.available
+      };
+      saveData();
+      updateTables();
+    }
+
+    function editClient(i) {
+      const client = clients[i];
+      const name = prompt("Имя клиента", client.name);
+      if(name === null) return;
+      const phone = prompt("Телефон", client.phone);
+      if(phone === null) return;
+      clients[i] = {name, phone};
+      saveData();
+      updateTables();
+    }
+
+    function callClient(i) {
+      alert("Звонок клиенту: " + clients[i].name + " Телефон: " + clients[i].phone);
     }
 
     function generateReport() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(orders, null, 2));
+      const data = {cars, clients, orders};
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
-      a.href = dataStr;
-      a.download = "sales_report.json";
+      a.href = url;
+      a.download = "report.json";
       a.click();
+      URL.revokeObjectURL(url);
     }
 
-    // при загрузке
     updateTables();
+
+
+
+
+    const carPhotos = {
+      "Toyota Corolla": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/2019_Toyota_Corolla_SE_Hybrid_1.8_Front.jpg/640px-2019_Toyota_Corolla_SE_Hybrid_1.8_Front.jpg",
+      "Honda Civic": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2022_Honda_Civic_EXL_1.5_Front.jpg/640px-2022_Honda_Civic_EXL_1.5_Front.jpg",
+      "Nissan Qashqai": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Nissan_Qashqai_Acenta_DCi_1.5_Front.jpg/640px-Nissan_Qashqai_Acenta_DCi_1.5_Front.jpg",
+      // Добавляй свои модели с ссылками на фото
+    };
+
+
+    function showGallery(key) {
+      const src = carPhotos[key];
+      if(src) {
+        const modal = document.getElementById("carImageModal");
+        const img = document.getElementById("carImage");
+        img.src = src;
+        modal.style.display = "flex";
+      } else {
+        alert("Фото для этого автомобиля не найдено.");
+      }
+    }
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const modal = document.getElementById("carImageModal");
+      modal.addEventListener("click", e => {
+        if(e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    });
   </script>
+
+
+  <div id="carImageModal" style="
+    display:none;
+    position: fixed;
+    top:0; left:0;
+    width:100vw; height:100vh;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;">
+    <img id="carImage" src="" alt="Фото авто" style="max-width:90%; max-height:90%; border-radius:10px; box-shadow: 0 0 15px #fff;" />
+  </div>
+
 </body>
 </html>
